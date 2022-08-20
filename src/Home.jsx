@@ -1,5 +1,6 @@
 import React from "react";
 import WordleDisplayer from "./Heading/WordleDisplayer";
+import Keyboard from "./Keyboard/Keyboard";
 import GameStage from "./PlayArea/GameStage";
 
 export default function Home()
@@ -10,6 +11,7 @@ export default function Home()
             <div className="home">
                 <WordleDisplayer></WordleDisplayer>
                 <GameStage></GameStage>
+                <Keyboard></Keyboard>
             </div>
         
 
