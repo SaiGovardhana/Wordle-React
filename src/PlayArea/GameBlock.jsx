@@ -1,12 +1,13 @@
 import React from "react";
 
-export default function GameBlock({text})
+export default function GameBlock({text,className})
 {
     if(text === undefined)
         text=' ';
 
+
     return (    
-                <div className="game-block">
+                <div className={className}>
                     {text}
 
                 </div>

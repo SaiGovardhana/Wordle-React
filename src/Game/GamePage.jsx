@@ -8,9 +8,22 @@ import InputHandler from "./InputHandler";
 
 export default function GamePage()
 {   let [state,setState]=useState([]);
-    let gameHandler=new GameHandler(state,setState);
+    let [isPlayable,setPlayable]=useState(true);
+    let [curRow,setCurRow]=useState(0);
+    let word='HELLO'
+    let gameHandler=new GameHandler(state,setState,curRow);
     useEffect(()=>{ 
-        let inputHandler=(e)=>InputHandler(e,gameHandler);
+        let inputHandler=(e)=>{
+           
+            let enter=InputHandler(e,gameHandler);
+            if(enter==='Enter')
+            {
+                if(state.length==5*(curRow+1))
+                    setCurRow(prev=>prev+1);
+            }
+        };
+        
+        
         window.addEventListener('keyup',inputHandler);
         window.addEventListener('click',inputHandler);
         
@@ -24,7 +37,7 @@ export default function GamePage()
     return (
             <div className="game-page">
                 <WordleDisplayer></WordleDisplayer>
-                <GameStage state={state}></GameStage>
+                <GameStage word={word} curRow={curRow} state={state}></GameStage>
                 <Keyboard></Keyboard>
             </div>
           

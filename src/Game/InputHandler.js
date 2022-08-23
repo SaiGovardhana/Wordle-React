@@ -10,8 +10,8 @@ export default function InputHandler(event,gameHandler)
         {
             if(event.target.type!='button')
             {
-                console.log('Not a button clicked')
-               
+                
+               return;
             }
             
                 key=event.target.innerText;
@@ -27,9 +27,11 @@ export default function InputHandler(event,gameHandler)
         gameHandler.removeInput();
         return;
         }
-        console.log('here')
+        if(key ==='Enter')
+            return 'Enter';
+       
         if(key.length==1 &&(key.toUpperCase().charCodeAt()>=65) && (key.toUpperCase().charCodeAt()<=90 ))
-        {   console.log(gameHandler.getSize())
+        {   
             if(gameHandler.getSize()<30)
             {  
                 gameHandler.addInput(key.toUpperCase())

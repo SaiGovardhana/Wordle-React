@@ -85,10 +85,6 @@ body{
     
 }
 
-.bottom-text
-{
-    
-}
 
 /*End of WORDLE heading */
 
@@ -104,20 +100,35 @@ body{
     height: 1.7rem;
     margin: 0;
     padding: 0;
-    border:  white 0.1rem  solid;
+    border:  black 0.1rem  solid;
+    background-color: gray;
     margin-left: .5em;
     text-align: center;
     padding: 3px;
+    transition-duration: 0.5s;
+    transition-timing-function:ease-in-out;
    
 }
+.game-block-correct
+{   transform: rotateX(360deg);
 
+    background-color: lawngreen;
+}
+.game-block-present
+{   transform: rotateX(360deg);
+    background-color: orange;
+}
+.game-block-wrong
+{   transform: rotateX(360deg);
+    background-color: red;
+}
 
 .game-row
 {   margin-bottom: 2rem;
     display: flex;
     flex-grow: 1;
     flex-direction: row;
-    
+   
     justify-content: space-between;
 }
 
