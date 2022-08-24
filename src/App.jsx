@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes} from "react-router-dom";
 import GamePage from "./Game/GamePage";
 
 export default function App()
@@ -8,9 +8,10 @@ export default function App()
     return (
 
         <BrowserRouter>
-             <GamePage></ GamePage>
+            <Routes>
+             <Route path="/play" element={<GamePage></GamePage>}></Route>
         
-        
+             </Routes>
         </BrowserRouter>
 
     );
