@@ -1,8 +1,9 @@
 import React, {useEffect, useState } from "react";
-import { Navigate, NavLink } from "react-router-dom";
+
 import WordleDisplayer from "../Heading/WordleDisplayer";
 import Keyboard from "../Keyboard/Keyboard";
 import GameStage from "../PlayArea/GameStage";
+import displayToast from "../Toast/DisplayToast";
 import GameHandler from "./GameHandler";
 import getWord from "./getWord";
 import InputHandler from "./InputHandler";
@@ -11,6 +12,8 @@ import InputHandler from "./InputHandler";
 export default function GamePage()
 {   let [state,setState]=useState([]);
     let [curRow,setCurRow]=useState(0);
+    let [word,setWord]=useState(getWord());
+    let [isGameCompleted,setGameCompleted]=useState(false);
     let [isWordsPresent,setWordsPresent]=useState(localStorage.getItem('words')!=undefined);
     let isComponentMounted=true;
     
@@ -19,7 +22,7 @@ export default function GamePage()
     {  
         useEffect(
         ()=>
-        {
+        {   displayToast('Downloading Words..Please Wait');
             fetch('/words.json',{method:'GET'}).then((res)=>
             {
                 if(res.status!=200)
@@ -35,7 +38,10 @@ export default function GamePage()
 
                     localStorage.setItem('words',body);
                     if(isComponentMounted)
+                    {
                         setWordsPresent(true);
+                        setWord(getWord());
+                    }
                     
 
 
@@ -48,17 +54,17 @@ export default function GamePage()
         return (
             <div className="game-page">
                 <WordleDisplayer></WordleDisplayer>
-                <h1 style={{textAlign:'center'}} >Couldn't find Words...Downloading</h1>
+                <h2 style={{textAlign:'center'}} >Couldn't find Words...Downloading</h2>
                 <Keyboard></Keyboard>
             </div>
           );
     }
 
 
-    //Actual game handling starts here
+    
 
-    let [word,setWord]=useState(getWord());
-    let [isGameCompleted,setGameCompleted]=useState(false);
+    
+    
     console.log(word)
 
     let gameHandler=new GameHandler(state,setState,curRow);
@@ -71,7 +77,7 @@ export default function GamePage()
             {
                 if(state.length==5*(curRow+1))
                 {   if(localStorage.getItem('words').indexOf(state.slice(-5).join(''))==-1)
-                    {
+                    {   displayToast('Word Not In dictionary!!!');
                         console.log('Word Not In dictionary!!!');
                         return;
                     }
@@ -79,6 +85,10 @@ export default function GamePage()
                     if(state.length==30||word==state.slice(-5).join(''))
                         {
                             console.log('Game Completed');
+                            if(word==state.slice(-5).join(''))
+                                displayToast(`Well Done!`,'green');
+                            else
+                                displayToast(`Oops! The word is ${word}`,'red');
                             setGameCompleted(true);
                             
                         }
@@ -103,7 +113,7 @@ export default function GamePage()
             <WordleDisplayer></WordleDisplayer>
             <GameStage word={word} curRow={curRow} state={state}></GameStage>
             {
-                    (word==state.slice(-5).join(''))?<h1 className="green">Game Won</h1>:<h1 className="red">Game Lost</h1>
+                    (word==state.slice(-5).join(''))?<h1 style={{textAlign:'center'}} className="green">Game Won</h1>:<h1 style={{textAlign:'center'}} className="red">Game Lost</h1>
             }
             
             <button className={'game-end-button'} onClick={()=>{

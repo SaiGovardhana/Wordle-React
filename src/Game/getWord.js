@@ -5,6 +5,7 @@ export default function getWord()
         {   
               
             console.log('Couldnt find words');
+            return;
 
         }
     words=words.split(',');

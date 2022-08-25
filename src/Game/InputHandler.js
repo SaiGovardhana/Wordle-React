@@ -17,9 +17,9 @@ export default function InputHandler(event,gameHandler)
                 key=event.target.innerText;
                 if(key=='\u{232B}')
                     key='Backspace';
-                if(key=='\u{23C3}')
+                if(key=='\u{23CE}')
                     key='Enter';
-            
+
 
         }
         if(key ==='Backspace')
